@@ -1,0 +1,15 @@
+--- # Packages to install
+
+CRAN:
+  - ggplot2
+  - zeallot
+  - shiny
+  - shinydashboard
+  - RColorBrewer
+  - viridis
+  - scales
+  - shinyWidgets
+  - leaflet
+  - leaflet.extras
+  - htmlwidgets
+  - shinyBS

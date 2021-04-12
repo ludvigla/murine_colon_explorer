@@ -4,17 +4,12 @@ library(htmlwidgets)
 library(shiny)
 library(leaflet)
 library(leaflet.extras)
-library(STutility)
+library(ggplot2)
 library(zeallot)
 library(shinyBS)
 library(shinyWidgets)
 library(RColorBrewer)
-#se.Colon <- readRDS("~/Eduardo/app_test/se.Colon.stereoscope")
 
-
-#width <- 8008#9901
-#height <- 7851#8929
-#sf <- 250.3/8008#154.6226/9901
 coords.list <- list(readRDS(file = "~/Eduardo/app_test/data/coords1"), readRDS(file = "~/Eduardo/app_test/data/coords2"))
 expr.data.list <- list(readRDS(file = "~/Eduardo/app_test/data/expr.data1"), readRDS(file = "~/Eduardo/app_test/data/expr.data2"))
 dim.data.list <- list(readRDS(file = "~/Eduardo/app_test/data/dim.data1"), readRDS(file = "~/Eduardo/app_test/data/dim.data2"))
@@ -22,32 +17,6 @@ contrib.data <- readRDS(file = "~/Eduardo/app_test/data/contrib.data")
 cell.data.list <- list(readRDS(file = "~/Eduardo/app_test/data/cell.data1"), readRDS(file = "~/Eduardo/app_test/data/cell.data2"))
 gene.choices <- readRDS("~/Eduardo/app_test/data/gene.choices")
 
-#coords <- subset(GetStaffli(se.Colon)@meta.data[, c("pixel_x", "pixel_y", "sample")], sample == "1")
-#coords <- coords[, 1:2]*sf
-#saveRDS(coords, file = "~/Eduardo/app_test/data/coords1")
-#expr.data <- se.Colon@assays$SCT@data[VariableFeatures(se.Colon), se.Colon$day %in% "d14"]
-#saveRDS(expr.data, file = "~/Eduardo/app_test/data/expr.data2")
-#dim.data <- se.Colon@reductions$NMF@cell.embeddings[rownames(coords.list[[2]]), ]
-#saveRDS(dim.data, file = "~/Eduardo/app_test/data/dim.data2")
-#contrib.data <- se.Colon@reductions$NMF@feature.loadings
-#saveRDS(contrib.data, file = "~/Eduardo/app_test/data/contrib.data1")
-#cell.data <- se.Colon@assays$stereoscope.low.level@data
-#rownames(cell.data) <- gsub(pattern = "\\.1\\.", replacement = "(1)", x = rownames(cell.data))
-#rownames(cell.data) <- gsub(pattern = "\\.2\\.", replacement = "(2)", x = rownames(cell.data))
-#rownames(cell.data) <- gsub(pattern = "\\.", replacement = " ", x = rownames(cell.data))
-#rownames(cell.data) <- gsub(pattern = "     ", replacement = " & γδ", x = rownames(cell.data))
-#rownames(cell.data) <- gsub(pattern = "CCL21 ", replacement = "CCL21+", x = rownames(cell.data))
-#rownames(cell.data) <- gsub(pattern = "CXCL14 ", replacement = "CXCL14+", x = rownames(cell.data))
-#rownames(cell.data) <- gsub(pattern = "HAND1 ", replacement = "HAND1+", x = rownames(cell.data))
-#rownames(cell.data) <- gsub(pattern = "COL6A5 ", replacement = "COL6A5+", x = rownames(cell.data))
-#rownames(cell.data) <- gsub(pattern = "EBF ", replacement = "EBF+", x = rownames(cell.data))
-#rownames(cell.data) <- gsub(pattern = "SPP1 ", replacement = "SPP1+", x = rownames(cell.data))
-#rownames(cell.data) <- gsub(pattern = "SOX6 ", replacement = "SOX6+", x = rownames(cell.data))
-#rownames(cell.data) <- gsub(pattern = "IFIT3 ", replacement = "IFIT3+", x = rownames(cell.data))
-#rownames(cell.data) <- gsub(pattern = "PDGFRA ", replacement = "PDGFRA+", x = rownames(cell.data))
-#rownames(cell.data) <- gsub(pattern = "IL18 ", replacement = "IL18+", x = rownames(cell.data))
-#cell.data <- cell.data[, rownames(coords)]
-#saveRDS(cell.data, file = "~/Eduardo/app_test/data/cell.data2")
 
 palette.select <- list("Spectral" = rev(brewer.pal(n = 9, name = "Spectral")),
                     "viridis" = "viridis", "magma" = "magma", "Blues" = "Blues", "Greens" = "Greens",
@@ -134,7 +103,6 @@ ui <- dashboardPage(
 server <- function(input, output, session) {
   
   output$myUIOutput <- renderUI({
-    print(rv$lastBtn)
     if (rv$lastBtn == "factor") {
       plotOutput("contrib")
     } else {
@@ -195,15 +163,6 @@ server <- function(input, output, session) {
                          fillColor = pal(data[, variable]), group = "Spots", fillOpacity = data[, "alpha"], stroke = FALSE) %>%
         addLegend(pal = pal_rev, position = "topright", title = variable, values = data[, variable], labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE)))
     })
-  })
-
-  
-  observe({
-    click <- input$map1_click
-    if(is.null(click))
-      return()
-    text<-paste("Lattitude ", click$lat, "Longtitude ", click$lng)
-    print(text)
   })
   
   rv <- reactiveValues(lastBtn = "factor")

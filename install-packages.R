@@ -34,6 +34,9 @@ if (!(is.null(n.pkgs))) {
   }
 }
 
+# Install github packages
+if (!require("devtools")) install.packages("devtools")
+devtools::install_github("talgalili/d3heatmap")
 
 # log-message construction
 success <- ifelse(is.null(success),

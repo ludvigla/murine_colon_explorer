@@ -9,7 +9,7 @@ library(zeallot)
 library(shinyBS)
 library(shinyWidgets)
 library(RColorBrewer)
-library(pheatmap)
+library(d3heatmap)
 
 coords.list <- list(readRDS(file = "~/Eduardo/app_test/data/coords1"), readRDS(file = "~/Eduardo/app_test/data/coords2"))
 expr.data.list <- list(readRDS(file = "~/Eduardo/app_test/data/expr.data1"), readRDS(file = "~/Eduardo/app_test/data/expr.data2"))

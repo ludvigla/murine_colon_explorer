@@ -7,6 +7,8 @@ Clone the repo from the terminal by running:
 `$git clone https://github.com/ludvigla/murine_colon_explorer`
 
 To run the app, you first need to install the following R packages:
+
+CRAN:
 - ggplot2
 - zeallot
 - shiny
@@ -19,6 +21,9 @@ To run the app, you first need to install the following R packages:
 - leaflet.extras
 - htmlwidgets
 - shinyBS
+
+GitHub:
+- d3heatmap
 
 You can install the packages directly with the install-packages.R script:
 

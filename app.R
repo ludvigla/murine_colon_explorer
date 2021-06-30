@@ -9,6 +9,7 @@ library(zeallot)
 library(shinyBS)
 library(shinyWidgets)
 library(RColorBrewer)
+library(pheatmap)
 
 coords.list <- list(readRDS(file = "~/Eduardo/app_test/data/coords1"), readRDS(file = "~/Eduardo/app_test/data/coords2"))
 expr.data.list <- list(readRDS(file = "~/Eduardo/app_test/data/expr.data1"), readRDS(file = "~/Eduardo/app_test/data/expr.data2"))
@@ -72,6 +73,7 @@ ui <- dashboardPage(
            ),
            actionBttn(inputId = "go", style = "bordered", size = "s", label = "Factor gene weights"),
            actionBttn(inputId = "go2", style = "bordered", size = "s", label = "Value histogram"),
+           actionBttn(inputId = "go3", style = "bordered", size = "s", label = "Celltype correlation"),
            selectInput(
              inputId = "pal",
              label = "palette",
@@ -95,7 +97,9 @@ ui <- dashboardPage(
         tabPanel(value = 2, title = "Td14 : DSS-induced colitis", column(width = 12, leafletOutput("map2", width = "100%", height = "600px")))
       ),
       bsModal(id = "modalExample", title = "Gene weights", "go", size = "large", uiOutput("myUIOutput")),
-      bsModal(id = "modalExample2", title = "histogram", "go2", size = "large", plotOutput("histogram"))
+      bsModal(id = "modalExample2", title = "histogram", "go2", size = "large", plotOutput("histogram")),
+      tags$head(tags$style(HTML('.modal-lg {width: 850px;}'))),
+      bsModal(id = "modalExample3", title = "celltype correlation", "go3", size = "large", d3heatmapOutput("heatmap", height = "700px", width = "800px"))
     )
   )
 )
@@ -146,6 +150,13 @@ server <- function(input, output, session) {
       labs(x = variable) +
       geom_vline(aes(xintercept = input$maxcutoff*max(data[, paste0(variable, "_raw")]), color = "cutoff_threshold"), linetype = "longdash") +
       scale_color_manual(values = c("cutoff_threshold" = "black"))
+  })
+  
+  output$heatmap <- renderD3heatmap({
+    i <- input$tabset1
+    corMat <- cor(t(cell.data.list[[1]]))
+    diag(corMat) <- NA
+    d3heatmap(corMat, col = rev(RColorBrewer::brewer.pal(n = 11, name = "RdBu")), cexRow = 0.8, cexCol = 0.8, key = TRUE, key.location = "tr", keysize = 2, key.title = "correlation")
   })
   
   toListen <- reactive({

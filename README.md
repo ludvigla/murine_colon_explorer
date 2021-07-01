@@ -54,10 +54,8 @@ Formatting options:
   * Value histogram : show a histogram of the selected value vector
   * palette : select a color palette
   
-![](app.png)
 
-
-[![demo](app.png)](https://user-images.githubusercontent.com/23736938/124124194-73489780-da78-11eb-80c8-0b34c28de1ff.mp4)
+[![demo]](https://user-images.githubusercontent.com/23736938/124124194-73489780-da78-11eb-80c8-0b34c28de1ff.mp4)
 
 ![demo](https://user-images.githubusercontent.com/23736938/124124416-aee36180-da78-11eb-857d-e6edf3ef5bc2.mp4)
 

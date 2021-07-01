@@ -57,7 +57,8 @@ Formatting options:
 
 [![]](https://user-images.githubusercontent.com/23736938/124126192-b7d53280-da7a-11eb-8aab-4286aeafc10f.mp4)
 
+[![]](https://user-images.githubusercontent.com/23736938/124126317-da674b80-da7a-11eb-8fe0-cf55f36db955.mp4)
 
+[![]](https://user-images.githubusercontent.com/23736938/124126375-e94dfe00-da7a-11eb-800f-e07be67d34de.mp4)
 
-
-
+[![]](https://user-images.githubusercontent.com/23736938/124126434-f5d25680-da7a-11eb-83cb-712dde6aa831.mp4)
